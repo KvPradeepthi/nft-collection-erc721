@@ -1,0 +1,20 @@
+{
+  "name": "nft-collection-erc721",
+  "version": "1.0.0",
+  "description": "ERC-721 compatible NFT smart contract with comprehensive testing and Docker containerization",
+  "main": "hardhat.config.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.20.0",
+    "hardhat-gas-reporter": "^1.0.0",
+    "chai": "^4.3.0"
+  }
+}
