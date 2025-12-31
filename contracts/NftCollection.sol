@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title NftCollection
@@ -68,7 +68,6 @@ contract NftCollection is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             "Token ID out of valid range"
         );
         require(!_exists(tokenId), "Token already exists");
-
         _safeMint(to, tokenId);
         totalSupply++;
     }
@@ -98,11 +97,9 @@ contract NftCollection is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
             _isApprovedOrOwner(_msgSender(), tokenId),
             "Not authorized to burn this token"
         );
-
         address owner = ownerOf(tokenId);
         _burn(tokenId);
         totalSupply--;
-
         emit TokenBurned(tokenId, owner, block.timestamp);
     }
 
@@ -133,12 +130,10 @@ contract NftCollection is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         uint256 tokenId
     ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         require(_exists(tokenId), "Token does not exist");
-
         string memory _tokenURI = super.tokenURI(tokenId);
         if (bytes(_tokenURI).length > 0) {
             return _tokenURI;
         }
-
         // Build URI from base URI if not explicitly set
         if (bytes(baseURI).length > 0) {
             return
@@ -179,22 +174,18 @@ contract NftCollection is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
      */
     function _uint2str(uint256 value) internal pure returns (string memory) {
         if (value == 0) return "0";
-
         uint256 temp = value;
         uint256 digits;
-
         while (temp != 0) {
             digits++;
             temp /= 10;
         }
-
         bytes memory buffer = new bytes(digits);
         while (value != 0) {
             digits--;
             buffer[digits] = bytes1(uint8(48 + (value % 10)));
             value /= 10;
         }
-
         return string(buffer);
     }
 
